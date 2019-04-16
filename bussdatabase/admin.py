@@ -5,7 +5,8 @@ from .models import *
 
 
 class BussAdmin(admin.ModelAdmin):
-    list_display = ('navn', 'registreringsnummer', 'karosserifabrikk', 'vekt_tonn')
+    list_display = ('navn', 'registreringsnummer', 'karosserifabrikk', 'forening', 'vekt_tonn')
+    list_filter = ('forening',)
 
 
 admin.site.register(Buss, BussAdmin)
@@ -28,4 +29,5 @@ class BildeAdmin(admin.ModelAdmin):
 admin.site.register(Bilde, BildeAdmin)
 admin.site.register(Status)
 admin.site.register(Tilstand)
+admin.site.register(Forening)
 # https://stackoverflow.com/questions/16307307/django-admin-show-image-from-imagefield

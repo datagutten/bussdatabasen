@@ -85,6 +85,12 @@ class ChassisForm(forms.ModelForm):
         exclude = {'lagt_til', 'endret', 'lagt_til_av', 'endret_av'}
 
 
+class ForeningForm(forms.ModelForm):
+    class Meta:
+        model = Forening
+        exclude = {}
+
+
 class GenericForm(forms.ModelForm):
     #self._meta.model
     class Meta:

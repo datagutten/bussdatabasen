@@ -1,6 +1,6 @@
 from django.db import models
 from .models import Selskap, Karosserifabrikk, Chassisprodusent, Tilstand
-from .models import Status
+from .models import Forening, Status
 
 # from .Bilde import Bilde
 
@@ -45,6 +45,8 @@ class Buss(models.Model):
                               null=True,
                               help_text='Ytelse i Hk')
     eier = models.CharField(max_length=200, blank=True, null=True)
+    forening = models.ForeignKey(Forening, on_delete=models.PROTECT,
+                                 blank=True, null=True, related_name='busser')
     byggeår = models.DecimalField(max_digits=4,
                                   decimal_places=0,
                                   blank=True,

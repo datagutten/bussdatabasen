@@ -159,3 +159,23 @@ class Tilstand(models.Model):
 
     class Meta:
         verbose_name_plural = 'tilstander'
+
+
+class Forening(models.Model):
+    navn = models.CharField(max_length=100)
+    sted = models.CharField(max_length=100)
+    nettside = models.URLField()
+    beskrivelse = models.TextField()
+    logo = models.ImageField(upload_to='media/foreningslogoer',
+                             null=True, blank=True)
+    leder = models.ForeignKey('auth.User',
+                              on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return '%s (%s)' % (self.navn, self.sted)
+
+    def kan_endre(self, user):
+        return utils.can_edit(self.leder, user, 'bussdatabase.change_forening')
+
+    class Meta:
+        verbose_name_plural = 'foreninger'
