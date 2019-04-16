@@ -27,6 +27,12 @@ class Selskap(models.Model):
         verbose_name_plural = 'selskaper'
         ordering = ['navn']
 
+    def link(self):
+        if self.navn.find('/') == -1:
+            return self.navn
+        else:
+            return self.id
+
     def kan_endre(self, user):
         return utils.can_edit(self.lagt_til_av, user, 'bussdatabase.change_selskap')
 
@@ -117,6 +123,12 @@ class Chassisprodusent(models.Model):
 
     def __str__(self):
         return str(self.navn)
+
+    def link(self):
+        if self.navn.find('/') == -1:
+            return self.navn
+        else:
+            return self.id
 
     def kan_endre(self, user):
         return utils.can_edit(self.lagt_til_av, user, 'bussdatabase.change_chassisprodusent')
