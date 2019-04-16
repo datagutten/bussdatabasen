@@ -101,7 +101,8 @@ class Buss(models.Model):
     endret = models.DateTimeField(auto_now=True)
     endret_av = models.ForeignKey('auth.User',
                                   on_delete=models.PROTECT,
-                                  related_name='Endret_av')
+                                  related_name='Endret_av',
+                                  null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'busser'
@@ -165,3 +166,9 @@ class Buss(models.Model):
             return self.vekt/1000
         else:
             return None
+
+    def key(self):
+        if self.registreringsnummer:
+            return self.registreringsnummer
+        else:
+            return self.id
