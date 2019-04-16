@@ -1,0 +1,35 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+    
+	{% if bilde %}
+	<h1>Endre bilde {{bilde.bilde}} av {{buss.navn}}</h1>
+	<img src="/{{bilde.bilde}}" style="max-width: 500px"/>
+	<form method="POST" class="post-form" enctype="multipart/form-data" action="{% url 'bussdatabase:bilde_endre' bilde_pk=bilde.pk %}">
+	{% else %}
+	<h1>Last opp bilder av {{buss.navn}}</h1>
+	<form method="POST" class="post-form" enctype="multipart/form-data" action="{{host}}{% url 'bussdatabase:buss_bilder_id' id=buss.pk %}">
+	{% endif %}
+	{% csrf_token %}
+		<table>
+        {{ form.as_table }}
+		</table>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+	<p>Eksisterende bilder:</p>
+	<p>
+	{% if bilder %}
+	{% for bilde in bilder %}
+		<a href="{% url 'bussdatabase:bilde_endre' bilde_pk=bilde.pk %}"><img src="/{{bilde.bilde}}" style="max-width: 300px"/></a>
+	{% endfor %}
+	</p>
+	<p>
+	{% if buss.registreringsnummer %}
+	<a href="{% url 'bussdatabase:buss_regnr' regnr=buss.registreringsnummer %}">Vis buss</a>
+	{% else %}
+	<a href="{% url 'bussdatabase:buss_id' id=buss.pk %}">Vis buss</a>
+	{% endif %}
+	
+	</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <ul>
+    {% for eier in eiere %}
+        <li><a href="{% url 'bussdatabase:busstabell_eier' eier=eier %}">{{ eier }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

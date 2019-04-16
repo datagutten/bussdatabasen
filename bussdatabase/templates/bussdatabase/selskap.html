@@ -1,0 +1,53 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+
+<table border="1">
+  <tbody>
+    <tr>
+      <th scope="row">Navn</th>
+      <td>{{ selskap.navn|default:"" }}</td>
+    </tr>
+    {% if selskap.navn2 %}
+    <th scope="row">Alternativt navn</th>
+    <td>{{ selskap.navn2 }}</td>
+    {% endif %}
+    <tr>
+      <th scope="row">Forkortelse</th>
+      <td>{{ selskap.forkortelse|default:"" }}</td>
+    </tr>
+    {% if selskap.sted %}
+    <tr>
+      <th scope="row">Sted</th>
+      <td>{{ selskap.sted|default:"" }}</td>
+    </tr>
+    {% endif %}
+    {% if selskap.wikipedia %}
+    <tr>
+      <th scope="row">Wikipedia</th>
+        <td><a href="{{ selskap.wikipedia }}">{{ selskap.wikipedia_navn }}</a></td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% if busser %}
+
+<h2>Bevarte busser fra {{ selskap.navn}}:</h2>
+{% include 'bussdatabase/busstabell.html' %}
+
+{% endif %}
+{% if selskap.se_ogsa.all %}
+    <h2>Se også:</h2>
+    <ul>
+    {% for selskap_related in selskap.se_ogsa.all %}
+        <li><a href="{% url 'bussdatabase:selskap' navn=selskap_related.navn %}">{{ selskap_related.navn }}</a></li>
+    {%  endfor %}
+    </ul>
+{% endif %}
+    <p>
+    <a href="{% url 'bussdatabase:selskap_ny' %}">Legg til nytt selskap</a>
+    {% if kan_endre %}
+        <br /><a href="{% url 'bussdatabase:selskap_endre' navn=selskap.navn %}">Endre selskap</a>
+    {% endif %}
+    </p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block title %}
+    Logg inn - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+	 {% if messages %}
+		<ul>
+			{% for message in messages %}
+			<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+<form class="login" method="POST" action="https://db.bussdatabasen.no/accounts/login">
+
+  {% csrf_token %}
+
+  {{form.as_p}}
+
+  <li><input type="submit" class="logBut" value="Logg inn"/></li>
+  </form>
+{% endblock %}

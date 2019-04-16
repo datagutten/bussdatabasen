@@ -1,0 +1,9 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+    <h1>Importer fra Statens vegvesen</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+    {{ form }}
+    <button type="submit" class="save btn btn-default">Importer</button>
+    </form>
+{% endblock %}

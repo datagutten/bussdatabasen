@@ -1,0 +1,9 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+	{% if bilder %}
+	{% for bilde in bilder %}
+	{% include 'bussdatabase/bilde.html' with ekstra_tekst=bilde.lagt_til exif_link=True %}
+	{% endfor %}
+{% endif %}
+{% endblock %} 

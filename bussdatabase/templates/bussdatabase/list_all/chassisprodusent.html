@@ -1,0 +1,31 @@
+{% extends 'bussdatabase/base.html' %}
+{% load utils %}
+{% block content %}
+<table border="1">
+  <tbody>
+    <tr>
+      <th>Navn</th>
+      <th>Wikipedia</th>
+	  <th>Antall bevart</th>
+    </tr>
+{% for obj in objects %}
+    <tr>
+        <td><a href="{% url 'bussdatabase:chassisprodusent' navn=obj.navn %}">{{ obj.navn }}</a></td>
+    {% if obj.wikipedia %}
+	  <td>{{ obj.wikipedia|wikipedia }}</td>
+    {% else %}
+    <td>&nbsp;</td>
+    {% endif %}
+	  {% if obj.antall_bevarte %}
+	  <td><a href="{% url 'bussdatabase:chassisprodusent' navn=obj.navn %}">{{ obj.antall_bevarte }}</a></td>
+	  {% else %}
+	  <td>&nbsp;</td>
+	  {% endif %}
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+<a href="{% url 'bussdatabase:busstabell' %}">Se alle bevarte busser</a><br />
+<a href="{% url 'bussdatabase:generic_ny' topic='chassisprodusent' %}">Legg til ny chassisprodusent</a>
+{% endblock %}

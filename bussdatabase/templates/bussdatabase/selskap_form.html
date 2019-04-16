@@ -1,0 +1,16 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+
+    {% if not selskap %}
+    <h1>{{ title }}</h1>
+    {% else %}
+    <h1>Endre {{ selskap.navn }}</h1>
+    {% endif %}
+    <form method="POST" class="post-form">{% csrf_token %}
+	<table>
+        {{ form.as_table }}
+	</table>
+        <button type="submit" class="save btn btn-default">Lagre</button>
+    </form>
+{% endblock %}

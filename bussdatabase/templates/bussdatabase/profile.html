@@ -1,0 +1,30 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block title %}
+    Profil - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<p>Du er logget inn som {{ user.username }}, følgende opplysninger er registrert om deg:</p>
+<ul>
+<li>Mailadresse: {{ user.email }}</li>
+<li>Fornavn: {{ user.first_name }}</li>
+<li>Etternavn: {{ user.last_name }}</li>
+</ul>
+
+<p><a href="{% url 'bussdatabase:ny_buss' %}">Legg til ny buss</a></p>
+<p><a href="{% url 'socialaccount_connections' %}">Tilkoblede kontoer</a></p>
+<p><a href="{% url 'account_logout' %}">Logg ut</a></p>
+
+
+{% if busser %}
+<h2>Busser lagt til av deg:</h2>
+{% include 'bussdatabase/busstabell.html' %}
+{% endif %}
+
+{% if bilder %}
+<h2>Bilder lastet opp av deg:</h2>
+{% include 'bussdatabase/buss_bildegalleri.html' %}
+{% endif %}
+
+{% endblock %}

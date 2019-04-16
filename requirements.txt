@@ -1,0 +1,6 @@
+django>=2.1
+django-allauth
+requests
+requests-oauthlib
+Pillow
+mysqlclient

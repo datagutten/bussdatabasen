@@ -1,0 +1,158 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+
+    {% if buss.internnummer and buss.selskap.navn %}
+        <h1>{{ buss.selskap.navn }} {{ buss.internnummer }}</h1>
+    {% elif buss.selskap.navn %}
+        <h1>{{ buss.selskap.navn }}</h1>
+    {% elif buss.internnummer %}
+        <h1>{{ buss.internnummer }}</h1>
+    {% endif %}
+    {% if buss.toppbilde %}
+        <div class="wp-caption" style="max-width: 500px">
+            <a href="/{{ buss.toppbilde }}"><img src="/{{ buss.toppbilde }}"
+                                                 alt="{{ buss.toppbilde.bildetekst|default:"" }}"/></a>
+            <p class="wp-caption-text">
+                {{ buss.toppbilde.bildetekst|default:"" }}
+                {% if buss.toppbilde.fotograf %}
+                    <br/>Foto: {{ buss.toppbilde.fotograf }}
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+    {% if buss.tittel %}
+        <h2> {{ buss.tittel }}</h2>
+    {% endif %}
+    <table border="1" class="faktatabell" style="max-width: 500px">
+
+        {% if buss.internnummer and buss.selskap.navn %}
+            <tr>
+                <th>Internnummer</th>
+                <td>
+                    <a href="{% url 'bussdatabase:selskap' navn=buss.selskap.navn %}">{{ buss.selskap.navn }}</a> {{ buss.internnummer }}
+                </td>
+            </tr>
+        {% elif buss.internnummer %}
+            <tr>
+                <th>Internnummer</th>
+                <td>{{ buss.internnummer }}</td>
+            </tr>
+        {% elif buss.selskap %}
+            <tr>
+                <th>Selskap</th>
+                <td><a href="{% url 'bussdatabase:selskap' navn=buss.selskap.navn %}">{{ buss.selskap.navn }}</a></td>
+            </tr>
+        {% endif %}
+        {% if buss.registreringsnummer %}
+            <tr>
+                <th>Registreringsnummer</th>
+                <td>{{ buss.registreringsnummer }}</td>
+            </tr>
+        {% endif %}
+        {% if buss.byggeår %}
+            <tr>
+                <th>Byggeår</th>
+                <td>{{ buss.byggeår }}</td>
+            </tr>
+        {% endif %}
+        {% if buss.karosserifabrikk %}
+            <tr>
+                <th>Karosseri</th>
+                <td>
+                    <a href="{% url 'bussdatabase:karosserifabrikk' navn=buss.karosserifabrikk.link %}">{{ buss.karosserifabrikk.navn }}</a> {{ buss.karosseritype|default:"" }}
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>Chassis</th>
+            {% if buss.chassisprodusent %}
+                <td>
+                    <a href="{% url 'bussdatabase:chassisprodusent' navn=buss.chassisprodusent.navn %}">{{ buss.chassisprodusent.navn }}</a> {{ buss.chassistype|default:"" }}
+                </td>
+            {% else %}
+                <td>{{ buss.chassistype|default:"" }}</td>
+            {% endif %}
+        </tr>
+        {% if buss.motor %}
+            <tr>
+                <th>Motor</th>
+                <td>{{ buss.motor }}</td>
+            </tr>
+        {% endif %}
+        {% if buss.ytelse %}
+            <tr>
+                <th>Ytelse</th>
+                <td>{{ buss.ytelse }} Hk</td>
+            </tr>
+        {% endif %}
+        {% if buss.lengde %}
+            <tr>
+                <th>Lengde</th>
+                <td>{{ buss.lengde }} m</td>
+            </tr>
+        {% endif %}
+        {% if buss.bredde %}
+            <tr>
+                <th>Bredde</th>
+                <td>{{ buss.bredde }} m</td>
+            </tr>
+        {% endif %}
+        {% if buss.akselavstand %}
+            <tr>
+                <th>Akselavstand</th>
+                <td>{{ buss.akselavstand }} m</td>
+            </tr>
+        {% endif %}
+        {% if buss.vekt %}
+            <tr>
+                <th>Egenvekt</th>
+                <td>{{ buss.vekt_tonn }} tonn</td>
+            </tr>
+        {% endif %}
+        {% if buss.sitteplasser %}
+            <tr>
+                <th>Sitteplasser</th>
+                <td>{{ buss.sitteplasser }}</td>
+            </tr>
+        {% endif %}
+        {% if buss.ståplasser %}
+            <tr>
+                <th>Ståplasser</th>
+                <td>{{ buss.ståplasser }}</td>
+            </tr>
+        {% endif %}
+        {% if buss.eier %}
+            <tr>
+                <th>Eier</th>
+                <td><a href="{% url 'bussdatabase:busstabell_eier' eier=buss.eier %}">{{ buss.eier }}</a></td>
+            </tr>
+        {% endif %}
+    </table>
+
+    {{ buss.beskrivelse|linebreaks }}
+
+    {% include 'bussdatabase/buss_bildegalleri.html' with bilder=buss.bilder %}
+
+    {% if user.is_authenticated %}
+        <ul>
+            {% if buss.registreringsnummer %}
+                {% if kan_endre %}
+                    <li><a href="{% url 'bussdatabase:buss_endre' regnr=buss.registreringsnummer %}">Rediger buss</a>
+                    </li>
+                    <li><a href="{% url 'bussdatabase:import_vegvesen_quiet' regnr=buss.registreringsnummer %}">Hent
+                    opplysninger fra Statens Vegvesen</a>
+                {% endif %}
+                <li><a href="{% url 'bussdatabase:buss_bilder' regnr=buss.registreringsnummer %}">Last opp bilder</a>
+                </li>
+            {% else %}
+                {% if kan_endre %}
+                    <li><a href="{% url 'bussdatabase:buss_endre_id' id=buss.id %}">Rediger buss</a></li>
+                {% endif %}
+                <li><a href="{% url 'bussdatabase:buss_bilder_id' id=buss.id %}">Last opp bilder</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    <a href="{% url 'bussdatabase:busstabell' %}">Tilbake til oversikten</a>
+
+{% endblock %}

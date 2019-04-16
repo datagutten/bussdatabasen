@@ -1,0 +1,16 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+
+    <h1>{{ title }}</h1>
+
+    <p><a href="{% url 'bussdatabase:selskap_ny' %}">Legg til nytt selskap</a></p>
+    <p><a href="{% url 'bussdatabase:karosserifabrikk_ny' %}">Legg til ny karosserifabrikk</a></p>
+    <p><a href="{% url 'bussdatabase:generic_ny' topic='chassisprodusent' %}">Legg til ny chassisprodusent</a></p>
+    <form method="POST" class="post-form">{% csrf_token %}
+	<table>
+        {{ form.as_table }}
+	</table>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+	<div class="wp-caption" style="max-width: {{width|default:'500px'}}">
+		<a href="/{{bilde.bilde}}"><img src="/{{bilde.bilde}}" alt="{{bilde.bildetekst|default:"bilde av bussen"}}" /></a>
+		<p class="wp-caption-text">
+		{{ bilde.bildetekst|default:"" }}
+		{% if bilde.fotograf %}
+			Foto: {{ bilde.fotograf}}
+		{% endif %}
+		{% if vis_detaljer %}
+		{% endif %}
+		{% if exif_link %}
+		<br /><a href="{% url 'bussdatabase:exif' bilde_pk=bilde.pk %}">Vis EXIF</a>
+		{% endif %}
+		{% if ekstra_tekst %}
+		<br />{{ekstra_tekst}}
+		{% endif %}
+		</p>
+	</div>

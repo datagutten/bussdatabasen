@@ -1,0 +1,75 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+    <h1>Importer fra Statens vegvesen</h1>
+    {% if vegvesen.feilmelding %}
+    <p>{{ vegvesen.feilmelding }}</p>
+    {% else %}
+    <form method="POST" class="post-form" action="{% url 'bussdatabase:import_vegvesen_diff' regnr=buss.registreringsnummer %}">{% csrf_token %}
+    <button type="submit" class="save btn btn-default">Importer</button>
+    </form>
+    <table border="1">
+    <tr>
+        <th>Felt</th>
+        <th>Vegvesen</th>
+        <th>Bussdatabasen</th>
+        <th>Endre</th>
+    </tr>
+    <tr>
+        <th>Byggeår</th>
+        <td>{{ buss_vegvesen.byggeår|default:"" }}</td>
+        <td>{{ buss.byggeår|default:"" }}</td>
+        <td>{{ form.byggear }}</td>
+    </tr>
+    <tr>
+        <th>Chassistype</th>
+        <td>{{ buss_vegvesen.chassistype|default:"" }}</td>
+        <td>{{ buss.chassistype|default:"" }}</td>
+        <td>{{ form.chassis }}</td>
+    </tr>
+    <tr>
+        <th>Ytelse</th>
+        <td>{{ buss_vegvesen.ytelse|default:"" }} Hk</td>
+        <td>{{ buss.ytelse|default:"" }} Hk</td>
+        <td>{{ form.ytelse }}</td>
+    </tr>
+    <tr>
+        <th>Lengde</th>
+        <td>{{ buss_vegvesen.lengde|default:"" }}</td>
+        <td>{{ buss.lengde|default:"" }}</td>
+        <td>{{ form.lengde }}</td>
+    </tr>
+    <tr>
+        <th>Bredde</th>
+        <td>{{ buss_vegvesen.bredde|default:"" }}</td>
+        <td>{{ buss.bredde|default:"" }}</td>
+        <td>{{ form.bredde }}</td>
+    </tr>
+    <tr>
+        <th>Akselavstand</th>
+        <td>{{ buss_vegvesen.akselavstand|default:"" }}</td>
+        <td>{{ buss.akselavstand|default:"" }}</td>
+        <td>{{ form.akselavstand }}</td>
+    </tr>
+    <tr>
+        <th>Egenvekt</th>
+        <td>{{ buss_vegvesen.vekt_tonn|default:"" }} tonn</td>
+        <td>{{ buss.vekt_tonn|default:"" }} tonn</td>
+        <td>{{ form.vekt }}</td>
+    </tr>
+    <tr>
+        <th>Sitteplasser</th>
+        <td>{{ buss_vegvesen.sitteplasser|default:"" }}</td>
+        <td>{{ buss.sitteplasser|default:"" }}</td>
+        <td>{{ form.sitteplasser }}</td>
+    </tr>
+    <tr>
+        <th>Ståplasser</th>
+        <td>{{ buss_vegvesen.ståplasser|default:"" }}</td>
+        <td>{{ buss.ståplasser|default:"" }}</td>
+        <td>{{ form.staplasser }}</td>
+    </tr>
+    </table>
+    {% endif %}
+    <a href="{%  url 'bussdatabase:buss_regnr' regnr=buss.registreringsnummer %}">Vis buss</a>
+{% endblock %}

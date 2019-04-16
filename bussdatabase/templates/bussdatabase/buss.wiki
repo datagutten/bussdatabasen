@@ -1,0 +1,19 @@
+<onlyinclude>
+{% verbatim %}{{Buss{{{type|}}}|{% endverbatim %}
+internnummer={{ buss.internnummer }}|
+byggeår={{ buss.byggeår }}|
+karosseri=[[{{ buss.karosserifabrikk.navn }}]] {{ buss.karosseritype }}|
+chassis=[[Scania]] L94|
+motor={{ buss.motor }}|
+ytelse={{ buss.ytelse }}|
+lengde={{ buss.lengde }}|
+bredde={{ buss.byggeår }}|
+akselavstand={{ buss.akselavstand }}|
+egenvekt={{ buss.egenvekt }}|
+sitteplasser={{ buss.sitteplasser }}|
+ståplasser={{ buss.ståplasser }}|
+bilde=Nettbuss 722 Drammen 2 crop 2.jpg|
+plassering=[[Alnabru]]
+{% verbatim %}}}{% endverbatim %}
+</onlyinclude>
+{{ buss.beskrivelse }}

@@ -1,0 +1,44 @@
+{% extends 'bussdatabase/base.html' %}
+{% load utils %}
+{% block content %}
+
+<table border="1">
+  <tbody>
+    <tr>
+      <th scope="row">Navn</th>
+      <td>{{ chassisprodusent.navn|default:"" }}</td>
+    </tr>
+    {% if chassisprodusent.navn2 %}
+    <th scope="row">Alternativt navn</th>
+    <td>{{ chassisprodusent.navn2 }}</td>
+    {% endif %}
+    {% if chassisprodusent.wikipedia %}
+    <tr>
+      <th scope="row">Wikipedia</th>
+        <td><a href="{{ chassisprodusent.wikipedia }}">{{ chassisprodusent.wikipedia|wikipedia }}</a></td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% if busser %}
+    <p>&nbsp;</p>
+<h2>Bevarte busser fra {{ chassisprodusent.navn}}:</h2>
+{% include 'bussdatabase/busstabell.html' %}
+
+{% endif %}
+{% if chassisprodusent.se_ogsa.all %}
+    <h2>Se også:</h2>
+    <ul>
+    {% for chassisprodusent_related in chassisprodusent.se_ogsa.all %}
+        <li><a href="{% url 'bussdatabase:chassisprodusent' navn=chassisprodusent_related.navn %}">{{ chassisprodusent_related.navn }}</a></li>
+    {%  endfor %}
+    </ul>
+{% endif %}
+    <p class="navlinks">
+    <a href="{% url 'bussdatabase:generic_ny' topic='chassisprodusent' %}">Legg til ny chassisprodusent</a>
+    {% if kan_endre %}
+        <br /><a href="{% url 'bussdatabase:generic_endre' navn=chassisprodusent.navn topic='chassisprodusent' %}">Endre chassisprodusent {{ chassisprodusent.navn }}</a>
+    {% endif %}
+    <br /><a href="{% url 'bussdatabase:generic_list_all' topic='chassisprodusent' %}">Vis alle chassisprodusenter</a>
+    </p>
+{% endblock %}

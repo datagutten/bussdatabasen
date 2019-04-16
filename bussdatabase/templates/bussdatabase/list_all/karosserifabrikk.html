@@ -1,0 +1,33 @@
+{% extends 'bussdatabase/base.html' %}
+
+{% block content %}
+<table border="1">
+  <tbody>
+    <tr>
+      <th>Navn</th>
+      <th>Forkortelse</th>
+      <th>Sted</th>
+      <th>Første år</th>
+      <th>Siste år</th>
+      <th>Antall bygd</th>
+	  <th>Antall bevart</th>
+    </tr>
+{% for karosserifabrikk in objects %}
+    <tr>
+        <td><a href="{% url 'bussdatabase:karosserifabrikk' navn=karosserifabrikk.navn %}">{{ karosserifabrikk.navn|default:"" }}</a></td>
+	  <td>{{ karosserifabrikk.forkortelse|default:"" }}</td>
+	  <td>{{ karosserifabrikk.sted|default:"" }}</td>
+	  <td>{{ karosserifabrikk.første_år|default:"" }}</td>
+	  <td>{{ karosserifabrikk.siste_år|default:"" }}</td>
+	  <td>{{ karosserifabrikk.antall|default:"" }}</td>
+	  {% if karosserifabrikk.antall_bevarte %}
+	  <td><a href="{% url 'bussdatabase:karosserifabrikk' navn=karosserifabrikk.navn %}">{{ karosserifabrikk.antall_bevarte }}</a></td>
+	  {% else %}
+	  <td>&nbsp;</td>
+	  {% endif %}
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'bussdatabase:busstabell' %}">Se alle bevarte busser</a>
+{% endblock %}

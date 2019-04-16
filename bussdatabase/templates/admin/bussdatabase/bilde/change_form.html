@@ -1,0 +1,18 @@
+{% extends "admin/change_form.html" %}
+
+{% block field_sets %}
+{% if original %}
+<div class="aligned form-row">
+    <div>
+        <label>Forhåndsvisning:</label>
+        <img
+            alt="image preview"
+            src="/{{ original.bilde.url }}"
+            style="max-height: 300px;">
+    </div>
+</div>
+{% endif %}
+{% for fieldset in adminform %}
+  {% include "admin/includes/fieldset.html" %}
+{% endfor %}
+{% endblock %}

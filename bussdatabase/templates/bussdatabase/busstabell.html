@@ -1,0 +1,48 @@
+<table border="1">
+    <tbody>
+    <tr>
+        <th>Bilde</th>
+        <th>Regnr</th>
+        <th>Chassis</th>
+        <th>Karosseri</th>
+        <th>Byggeår</th>
+        <th>Selskap</th>
+        <th>Internnummer</th>
+    </tr>
+    {% for buss in busser %}
+        <tr style="min-height: 100px">
+            <td>{% if buss.toppbilde %}<img src="/{{ buss.toppbilde }}" style="max-height: 100px"
+                                            alt="{{ buss.toppbilde.bildetekst|default:"" }}"/> {% endif %}</td>
+            {% if buss.registreringsnummer %}
+                <td>
+                    <a href="{% url 'bussdatabase:buss_regnr' regnr=buss.registreringsnummer %}">{{ buss.registreringsnummer }}</a>
+                </td>
+            {% else %}
+                <td><a href="/buss/{{ buss.pk }}">Ukjent</a></td>
+            {% endif %}
+            {% if buss.chassisprodusent %}
+                <td>
+                    <a href="{% url 'bussdatabase:chassisprodusent' navn=buss.chassisprodusent.navn %}">{{ buss.chassisprodusent.navn|default:"" }}</a> {{ buss.chassistype|default:"" }}
+                </td>
+            {% else %}
+                <td>&nbsp;</td>
+            {% endif %}
+
+            {% if buss.karosserifabrikk %}
+                <td>
+                    <a href="{% url 'bussdatabase:karosserifabrikk' navn=buss.karosserifabrikk.link %}">{{ buss.karosserifabrikk.forkortelse|default:buss.karosserifabrikk.navn }}</a> {{ buss.karosseritype|default:"" }}
+                </td>
+            {% else %}
+                <td>&nbsp;</td>
+            {% endif %}
+            <td>{{ buss.byggeår|default:"" }}</td>
+            {% if buss.selskap %}
+                <td><a href="{% url 'bussdatabase:selskap' navn=buss.selskap.navn %}">{{ buss.selskap.navn }}</a></td>
+            {% else %}
+                <td>&nbsp;</td>
+            {% endif %}
+            <td>{{ buss.navn_kort|default:"" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

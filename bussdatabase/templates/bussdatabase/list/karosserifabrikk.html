@@ -1,0 +1,69 @@
+{% extends 'bussdatabase/base.html' %}
+{% load utils %}
+{% block content %}
+
+    <table border="1">
+        <tbody>
+        <tr>
+            <th scope="row">Navn</th>
+            <td>{{ karosserifabrikk.navn|default:"" }}</td>
+        </tr>
+        {% if karosserifabrikk.alternativt_navn %}
+            <tr>
+                <th scope="row">Navn</th>
+                <td>{{ karosserifabrikk.alternativt_navn|default:"" }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th scope="row">Forkortelse</th>
+            <td>{{ karosserifabrikk.forkortelse|default:"" }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Sted</th>
+            <td>{{ karosserifabrikk.sted|default:"" }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Første år</th>
+            <td>{{ karosserifabrikk.første_år|default:"" }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Siste år</th>
+            <td>{{ karosserifabrikk.siste_år|default:"" }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Antall bygd</th>
+            <td>{{ karosserifabrikk.antall|default:"" }}</td>
+        </tr>
+        {% if karosserifabrikk.wikipedia %}
+        <tr>
+          <th scope="row">Wikipedia</th>
+            <td><a href="{{ karosserifabrikk.wikipedia }}">{{ karosserifabrikk.wikipedia|wikipedia }}</a></td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    {% if busser %}
+        <p>
+        <h2>Bevarte busser med karosseri fra {{ karosserifabrikk.navn }}:</h2>
+        {% include 'bussdatabase/busstabell.html' %}
+        </p>
+    {% endif %}
+
+    {% if karosserifabrikk.se_ogsa.all %}
+        <h2>Se også:</h2>
+        <ul>
+            {% for karosserifabrikk_related in karosserifabrikk.se_ogsa.all %}
+                <li><a href="{% url 'bussdatabase:karosserifabrikk' navn=karosserifabrikk_related.navn %}">{{ karosserifabrikk_related.navn }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>
+        <a href="{% url 'bussdatabase:karosserifabrikk_ny' %}">Legg til ny karosserifabrikk</a>
+        {% if kan_endre %}
+            <br/><a href="{% url 'bussdatabase:generic_endre' topic='karosserifabrikk' navn=karosserifabrikk.navn %}">Endre karosserifabrikk</a>
+        {% endif %}
+    </p>
+    <a href="{% url 'bussdatabase:busstabell' %}">Se alle bevarte busser</a><br />
+    <a href="{% url 'bussdatabase:karosserifabrikker' %}">Se alle karosserifabrikker</a>
+{% endblock %}

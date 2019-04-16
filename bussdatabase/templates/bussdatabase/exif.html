@@ -1,0 +1,13 @@
+{% extends 'bussdatabase/base.html' %}
+{% block content %}
+{% include 'bussdatabase/bilde.html' %}
+<table>
+{% for tag, value in exif %}
+<tr>
+	<th>{{tag}}</th>
+	<td>{{value}}</td>
+</tr>
+
+{% endfor %}
+</table>
+{% endblock %}
