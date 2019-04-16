@@ -1,10 +1,12 @@
 import os
 
 from django.db import models
+import bussdatabase.utils as utils
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
 
 from .Buss import Buss
+
 
 class Bilde(models.Model):
     buss = models.ForeignKey(Buss, on_delete=models.PROTECT)
@@ -35,6 +37,12 @@ class Bilde(models.Model):
 
     def bussnavn(self):
         return self.buss.navn()
+
+    def navn(self):
+        return self.filnavn()
+
+    def kan_endre(self, user):
+        return utils.can_edit(self.lagt_til_av, user, 'bussdatabase.change_bilde')
 
 
 # Receive the post_delete signal
