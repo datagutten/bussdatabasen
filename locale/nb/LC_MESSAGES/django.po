@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-30 06:32-0500\n"
-"PO-Revision-Date: 2018-09-30 14:37+0200\n"
+"PO-Revision-Date: 2018-09-30 14:43+0200\n"
 "Last-Translator: Anders Birkenes <datagutten@datagutten.net>\n"
 "Language-Team: \n"
 "Language: nb_NO\n"
@@ -419,7 +419,7 @@ msgstr ""
 
 #: allauth/templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr "Vennligst Bekreft Din E-postadresse"
+msgstr "Vennligst bekreft din e-postadresse"
 
 #: allauth/templates/account/email/password_reset_key_message.txt:1
 #, python-format
@@ -454,12 +454,12 @@ msgstr ""
 
 #: allauth/templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr "Passordgjennopprettelse E-post"
+msgstr "E-postadresse for tilbakestilling av passord"
 
 #: allauth/templates/account/email_confirm.html:6
 #: allauth/templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
-msgstr "Bekreft E-postadresse"
+msgstr "Bekreft e-postadresse"
 
 #: allauth/templates/account/email_confirm.html:16
 #, python-format
@@ -497,7 +497,7 @@ msgid ""
 "up</a>\n"
 "for a %(site_name)s account and sign in below:"
 msgstr ""
-"Vennligst logg in med en\n"
+"Vennligst logg inn med en\n"
 "av dine eksisterende tredjeparts kontoer. Eller, <a href=\"%(signup_url)s"
 "\">registrer deg</a>\n"
 "for en konto på %(site_name)s og logg inn under:"
@@ -552,7 +552,7 @@ msgstr "Fjern e-postadressen %(email)s."
 #: allauth/templates/account/messages/logged_in.txt:4
 #, python-format
 msgid "Successfully signed in as %(name)s."
-msgstr "Innlogging som %(name)s. suksessfull."
+msgstr "Vellykket logget på som %(name)s."
 
 #: allauth/templates/account/messages/logged_out.txt:2
 msgid "You have signed out."
