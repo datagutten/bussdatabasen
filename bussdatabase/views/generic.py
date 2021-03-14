@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 
 def select_topic(topic):
-    print('Select topic')
     if topic == 'karosserifabrikk':
         info = {
             'model': Karosserifabrikk,
@@ -42,7 +41,6 @@ def select_topic(topic):
 
 
 def list_topic(request, topic, navn):
-    print('List topic')
     # info = select_topic(topic)
     if topic == 'karosserifabrikk':
         import bussdatabase.views.karosserifabrikk as karosserifabrikk
@@ -59,7 +57,6 @@ def list_topic(request, topic, navn):
 
 
 def list_all(request, topic):
-    print('List all')
     info = select_topic(topic)
     model = info['model']
 
@@ -96,7 +93,6 @@ def form(request, topic, navn=None):
         raise ValueError('Invalid topic')
 
     if navn:
-        print(navn)
         if topic == 'buss':
             if navn.isdigit():
                 obj = get_object_or_404(Buss, pk=navn)
@@ -118,7 +114,6 @@ def form(request, topic, navn=None):
         obj = None
         title = title_new
 
-    print(title)
     form_obj = form_obj(request.POST or None, instance=obj)
     if request.method == 'POST':
         if form_obj.is_valid():

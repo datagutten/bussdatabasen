@@ -6,7 +6,6 @@ from bussdatabase.models import Chassisprodusent, Buss
 
 
 def chassisprodusent(request, navn):
-    print('Chassisprodusent')
     chassis_object = get_object_or_404(Chassisprodusent, navn=navn)
     busser = Buss.objects.filter(chassisprodusent=chassis_object)
     title = 'Busser fra %s' % chassis_object
