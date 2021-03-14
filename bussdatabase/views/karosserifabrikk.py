@@ -25,6 +25,8 @@ def karosserifabrikk(request, navn):
     # karosserifabrikk_object = karosserifabrikk_object.first()
     # karosserifabrikk_object = get_object_or_404(Karoserrifabrikk, navn=navn)
     busser = Buss.objects.filter(karosserifabrikk=karosserifabrikk_object)
+    busser = busser.exclude(tilstand__navn='Hogget')
+
     title = 'Busser fra %s' % karosserifabrikk_object
     context = {'karosserifabrikk': karosserifabrikk_object, 'busser': busser, 'title': title,
                'kan_endre': karosserifabrikk_object.kan_endre(request.user)}
