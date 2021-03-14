@@ -8,6 +8,7 @@ from bussdatabase.models import Selskap, Buss
 def selskap(request, navn):
     selskap_object = get_object_or_404(Selskap, navn=navn)
     busser = Buss.objects.filter(selskap=selskap_object)
+    busser = busser.exclude(tilstand__navn='Hogget')
     title = 'Busser fra %s' % selskap_object
     context = {'selskap': selskap_object, 'busser': busser, 'title': title,
                'kan_endre': selskap_object.kan_endre(request.user)}

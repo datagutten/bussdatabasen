@@ -8,6 +8,8 @@ from bussdatabase.models import Chassisprodusent, Buss
 def chassisprodusent(request, navn):
     chassis_object = get_object_or_404(Chassisprodusent, navn=navn)
     busser = Buss.objects.filter(chassisprodusent=chassis_object)
+    busser = busser.exclude(tilstand__navn='Hogget')
+
     title = 'Busser fra %s' % chassis_object
     context = {'chassisprodusent': chassis_object, 'busser': busser, 'title': title,
                'kan_endre': chassis_object.kan_endre(request.user)}
