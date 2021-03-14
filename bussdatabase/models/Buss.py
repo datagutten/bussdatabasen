@@ -119,8 +119,10 @@ class Buss(models.Model):
                 navn = self.selskap.forkortelse + ' ' + self.internnummer
             else:
                 navn += self.internnummer
-        else:
+        elif self.registreringsnummer:
             navn += self.registreringsnummer
+        else:
+            navn = 'Buss id %d' % self.id
         return navn
 
     def navn_kort(self):
