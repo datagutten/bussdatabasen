@@ -166,7 +166,7 @@ class Forening(models.Model):
     sted = models.CharField(max_length=100)
     nettside = models.URLField()
     beskrivelse = models.TextField()
-    logo = models.ImageField(upload_to='media/foreningslogoer',
+    logo = models.ImageField(upload_to='foreningslogoer/',
                              null=True, blank=True)
     leder = models.ForeignKey('auth.User',
                               on_delete=models.PROTECT, null=True, blank=True)
