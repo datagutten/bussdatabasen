@@ -28,7 +28,6 @@ urlpatterns = [
     # Vis en enkelt buss
     path('buss/<int:id>', views.buss.index, name='buss_id'),
     path('buss/<str:navn>', views.buss.index, name='buss'),
-    path('buss/<str:selskap> <str:internnummer>', views.buss.index, name='buss_internnummer'),
     path('buss/<str:regnr>', views.buss.index, name='buss_regnr'),
 
     # Busstabell
