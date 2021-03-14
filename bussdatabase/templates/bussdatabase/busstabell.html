@@ -11,8 +11,8 @@
     </tr>
     {% for buss in busser %}
         <tr style="min-height: 100px">
-            <td>{% if buss.toppbilde %}<img src="/{{ buss.toppbilde }}" style="max-height: 100px"
-                                            alt="{{ buss.toppbilde.bildetekst|default:"" }}"/> {% endif %}</td>
+            <td>{% if buss.toppbilde %}<img src="{{ buss.toppbilde.url }}" style="max-height: 100px"
+                                            alt="{{ buss.toppbilde.bildetekst|default:"Bilde av bussen" }}"/> {% endif %}</td>
             {% if buss.registreringsnummer %}
                 <td>
                     <a href="{% url 'bussdatabase:buss_regnr' regnr=buss.registreringsnummer %}">{{ buss.registreringsnummer }}</a>

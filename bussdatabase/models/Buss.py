@@ -146,16 +146,16 @@ class Buss(models.Model):
         return self.navn()
 
     def toppbilde(self):
-        from .Bilde import Bilde
-        bilde = Bilde.objects.filter(buss=self, toppbilde=1)
-        if bilde:
-            return bilde[0]
+        top = self.images.filter(toppbilde=True).first()
+        if top is not None:
+            return top
+        # if top.exists():
+        #     return top.first()
+        else:
+            return self.images.first()
 
     def bilder(self):
-        from .Bilde import Bilde
-        bilder = Bilde.objects.filter(buss=self, toppbilde=0)
-        if bilder:
-            return bilder
+        return self.images.filter(toppbilde=False)
 
     def kan_endre(self, user):
         if user == self.lagt_til_av:

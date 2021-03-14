@@ -9,8 +9,8 @@ from .Buss import Buss
 
 
 class Bilde(models.Model):
-    buss = models.ForeignKey(Buss, on_delete=models.PROTECT)
-    bilde = models.ImageField(upload_to='media/bussbilder/')
+    buss = models.ForeignKey(Buss, on_delete=models.PROTECT, related_name='images')
+    bilde = models.ImageField(upload_to='bussbilder/')
     synlig = models.BooleanField(default=True)
     toppbilde = models.BooleanField(default=False)
     bildetekst = models.CharField(max_length=100, blank=True, null=True)
@@ -18,12 +18,12 @@ class Bilde(models.Model):
     lagt_til = models.DateTimeField(auto_now_add=True)
     lagt_til_av = models.ForeignKey('auth.User',
                                     on_delete=models.PROTECT,
-                                    related_name='Bilde_lagt_til_av',
+                                    related_name='images',
                                     null=True)
     endret = models.DateTimeField(auto_now=True)
     endret_av = models.ForeignKey('auth.User',
                                   on_delete=models.PROTECT,
-                                  related_name='Bilde_endret_av',
+                                  related_name='image_changed',
                                   null=True)
 
     class Meta:

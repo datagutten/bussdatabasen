@@ -22,9 +22,9 @@
 {% include 'bussdatabase/busstabell.html' %}
 {% endif %}
 
-{% if bilder %}
+{% if user.images.exists %}
 <h2>Bilder lastet opp av deg:</h2>
-{% include 'bussdatabase/buss_bildegalleri.html' %}
+{% include 'bussdatabase/buss_bildegalleri.html' with images=user.images.all %}
 {% endif %}
 
 {% endblock %}

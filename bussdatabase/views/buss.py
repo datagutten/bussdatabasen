@@ -50,9 +50,9 @@ def index(request, id=None, regnr=None, navn=None, selskap=None, internnummer=No
         buss = get_object_or_404(Buss, registreringsnummer=regnr)
     else:
         return
-    bilder = Bilde.objects.filter(buss=buss, toppbilde=0)
+
     context = {'buss': buss,
-               'bilder': bilder,
+               'top_image': buss.toppbilde(),
                'title': buss.navn,
                'kan_endre': buss.kan_endre(request.user),
                'referer': get_referer_view(request,

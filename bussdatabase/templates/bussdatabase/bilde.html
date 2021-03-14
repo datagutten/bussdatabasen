@@ -1,5 +1,5 @@
 	<div class="wp-caption" style="max-width: {{width|default:'500px'}}">
-		<a href="/{{bilde.bilde}}"><img src="/{{bilde.bilde}}" alt="{{bilde.bildetekst|default:"bilde av bussen"}}" /></a>
+		<a href="{{bilde.bilde.url}}"><img src="{{bilde.bilde.url}}" alt="{{bilde.bildetekst|default:"bilde av bussen"}}" /></a>
 		<p class="wp-caption-text">
 		{{ bilde.bildetekst|default:"" }}
 		{% if bilde.fotograf %}

@@ -9,14 +9,14 @@
     {% elif buss.internnummer %}
         <h1>{{ buss.internnummer }}</h1>
     {% endif %}
-    {% if buss.toppbilde %}
+    {% if top_image %}
         <div class="wp-caption" style="max-width: 500px">
-            <a href="/{{ buss.toppbilde }}"><img src="/{{ buss.toppbilde }}"
-                                                 alt="{{ buss.toppbilde.bildetekst|default:"" }}"/></a>
+            <a href="{{ top_image.bilde.url }}"><img src="{{ top_image.bilde.url }}"
+                                                 alt="{{ top_image.bildetekst|default:"Bilde av bussen" }}"/></a>
             <p class="wp-caption-text">
-                {{ buss.toppbilde.bildetekst|default:"" }}
-                {% if buss.toppbilde.fotograf %}
-                    <br/>Foto: {{ buss.toppbilde.fotograf }}
+                {{ top_image.bildetekst|default:"" }}
+                {% if top_image.fotograf %}
+                    <br/>Foto: {{ top_image.fotograf }}
                 {% endif %}
             </p>
         </div>
