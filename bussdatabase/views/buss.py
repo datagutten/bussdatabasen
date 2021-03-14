@@ -37,7 +37,6 @@ def get_referer_view(request, default=None):
 
 def index(request, id=None, regnr=None, navn=None, selskap=None, internnummer=None):
     from django.db.models import Q
-    print(selskap)
     if selskap and internnummer:
         selskap = get_object_or_404(Selskap, Q(navn=selskap) | Q(forkortelse=selskap))
         buss = get_object_or_404(Buss, selskap=selskap, internnummer=internnummer)
@@ -118,7 +117,6 @@ def buss_endre(request, id=None, regnr=None):
 
 def busstabell(request, selskap=None, merke=None, karosserifabrikk=None, chassis=None, eier=None, camping=False):
     if selskap:
-        print(selskap)
         # selskap_object = Selskap.objects.filter(navn=selskap)[0]
         selskap_object = get_object_or_404(Selskap, navn=selskap)
         busser = Buss.objects.filter(selskap=selskap_object)
@@ -155,5 +153,4 @@ def busstabell_camping(request):
 
 def eiere(request):
     eierliste = Buss.objects.order_by('eier').values_list('eier', flat=True).distinct().exclude(eier=None)
-    print(eierliste)
     return render(request, 'bussdatabase/eiere.html', {'eiere': eierliste})
