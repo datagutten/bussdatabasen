@@ -4,3 +4,4 @@ requests
 requests-oauthlib
 Pillow
 mysqlclient
+django-debug-toolbar~=3.2
