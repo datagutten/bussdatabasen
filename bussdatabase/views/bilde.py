@@ -2,17 +2,18 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from bussdatabase.models import Bilde, Buss
 from bussdatabase.forms import BussBildeForm, BussBildeEndreForm
+from PIL import Image, ExifTags
 
 
 def host(request):
     return request.scheme + '://' + request.get_host()
 
 
-def rotate_image(filepath):
+def rotate_image(filepath: str):
     # https://stackoverflow.com/a/26928142/2630074
-    from PIL import Image, ExifTags
     try:
         image = Image.open(filepath)
+        orientation = None
         for orientation in ExifTags.TAGS.keys():
             if ExifTags.TAGS[orientation] == 'Orientation':
                 break
@@ -27,7 +28,7 @@ def rotate_image(filepath):
             image = image.rotate(90, expand=True)
         else:
             return
-        image.save(str(filepath))
+        image.save(filepath)
         image.close()
 
     except (AttributeError, KeyError, IndexError):
@@ -70,13 +71,13 @@ def buss_bilder(request, pk=False, id=False, regnr=False, bilde_pk=None):
             else:
                 # Sørg for at det er et toppbilde
                 if not toppbilde:
-                    bilde.toppbilde=True
+                    bilde.toppbilde = True
             bilde.lagt_til_av = request.user
             bilde.endret_av = request.user
 
             bilde.save()
             if not bilde_pk:
-                rotate_image(bilde.bilde)
+                rotate_image(bilde.bilde.path)
             return redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
