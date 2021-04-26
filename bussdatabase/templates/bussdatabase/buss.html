@@ -140,8 +140,8 @@
                 {% if kan_endre %}
                     <li><a href="{% url 'bussdatabase:buss_endre' regnr=buss.registreringsnummer %}">Rediger buss</a>
                     </li>
-                    <li><a href="{% url 'bussdatabase:import_vegvesen_quiet' regnr=buss.registreringsnummer %}">Hent
-                    opplysninger fra Statens Vegvesen</a>
+                    {% comment %}<li><a href="{% url 'bussdatabase:import_vegvesen_quiet' regnr=buss.registreringsnummer %}">Hent
+                        opplysninger fra Statens Vegvesen</a></li>{% endcomment %}
                 {% endif %}
                 <li><a href="{% url 'bussdatabase:buss_bilder' regnr=buss.registreringsnummer %}">Last opp bilder</a>
                 </li>
