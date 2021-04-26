@@ -35,19 +35,18 @@ def get_referer_view(request, default=None):
     return referer
 
 
-def index(request, id=None, regnr=None, navn=None, selskap=None, internnummer=None):
+def index(request, id=None, regnr=None, navn=None):
     from django.db.models import Q
-    if selskap and internnummer:
-        selskap = get_object_or_404(Selskap, Q(navn=selskap) | Q(forkortelse=selskap))
-        buss = get_object_or_404(Buss, selskap=selskap, internnummer=internnummer)
-    elif id or (navn and navn.isdigit()):
-        buss = get_object_or_404(Buss, id=id)
+    buss = Buss.objects.prefetch_related('images').\
+        select_related('karosserifabrikk', 'chassisprodusent', 'selskap')
+    if id or (navn and navn.isdigit()):
+        buss = get_object_or_404(buss, id=id)
     elif navn:
-        buss = get_object_or_404(Buss,
+        buss = get_object_or_404(buss,
                                  Q(registreringsnummer=navn) |
                                  Q(internnummer=navn))
     elif regnr:
-        buss = get_object_or_404(Buss, registreringsnummer=regnr)
+        buss = get_object_or_404(buss, registreringsnummer=regnr)
     else:
         return
 
