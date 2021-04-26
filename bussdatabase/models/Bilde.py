@@ -1,10 +1,8 @@
-import os
-
 from django.db import models
-import bussdatabase.utils as utils
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
 
+import bussdatabase.utils as utils
 from .Buss import Buss
 
 
@@ -32,14 +30,8 @@ class Bilde(models.Model):
     def __str__(self):
         return str(self.bilde)
 
-    def filnavn(self):
-        return os.path.basename(str(self.bilde))
-
     def bussnavn(self):
         return self.buss.navn()
-
-    def navn(self):
-        return self.filnavn()
 
     def kan_endre(self, user):
         return utils.can_edit(self.lagt_til_av, user, 'bussdatabase.change_bilde')
