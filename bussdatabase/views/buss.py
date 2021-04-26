@@ -116,34 +116,30 @@ def buss_endre(request, id=None, regnr=None):
 
 
 def busstabell(request, selskap=None, merke=None, karosserifabrikk=None, chassis=None, eier=None, camping=False):
+    vehicles = Buss.objects.prefetch_related('images').select_related('chassisprodusent', 'karosserifabrikk', 'selskap')
     if selskap:
-        # selskap_object = Selskap.objects.filter(navn=selskap)[0]
-        selskap_object = get_object_or_404(Selskap, navn=selskap)
-        busser = Buss.objects.filter(selskap=selskap_object)
+        vehicles = vehicles.filter(selskap__navn=selskap)
         title = 'Busser fra %s' % selskap
     elif merke:
-        chassisprodusent_object = Chassisprodusent.objects.filter(navn=merke)
-        # if not chassisprodusent_object:
-        busser = Buss.objects.filter(chassisprodusent=chassisprodusent_object[0])
+        vehicles = vehicles.filter(chassisprodusent__navn=merke)
         title = 'Busser med %s chassis' % merke
     elif karosserifabrikk:
         karosserifabrikk_object = get_object_or_404(Karosserifabrikk, forkortelse=karosserifabrikk)
-        busser = Buss.objects.filter(karosserifabrikk=karosserifabrikk_object)
+        vehicles = vehicles.filter(karosserifabrikk=karosserifabrikk_object)
         title = 'Busser med karosseri fra %s' % karosserifabrikk_object.navn
     elif eier:
-        busser = Buss.objects.filter(eier=eier)
+        vehicles = vehicles.filter(eier=eier)
         title = 'Busser eid av %s' % eier
     elif camping:
-        tilstand_object = Tilstand.objects.get(navn='Campinginnredet')
-        busser = Buss.objects.filter(tilstand=tilstand_object)
+        vehicles = vehicles.filter(tilstand__navn='Campinginnredet')
         title = 'Busser med campinginnredning'
     else:
-        busser = Buss.objects.order_by('byggeår')
+        vehicles = vehicles.order_by('byggeår')
         title = 'Bevarte busser'
 
-    busser = busser.exclude(tilstand__navn='Hogget')
+    vehicles = vehicles.exclude(tilstand__navn='Hogget')
 
-    context = {'busser': busser, 'bilder': Bilde, 'title': title}
+    context = {'busser': vehicles, 'bilder': Bilde, 'title': title}
     return render(request, 'bussdatabase/busser.html', context)
 
 
